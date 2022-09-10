@@ -20,4 +20,4 @@ class Competition:
         return self.name
 
     def minusPlaces(self, places):
-        self.numberOfPlaces = int(self.numberOfPlaces) - places
+        self.numberOfPlaces = str(int(self.numberOfPlaces) - places)
