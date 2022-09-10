@@ -12,15 +12,31 @@ def create_app(testing_mode):
 
     @app.route('/')
     def index():
+        """
+        Affichage de la page d'accueil du site
+        """
         return render_template('index.html')
 
     @app.route('/showSummary', methods=['POST'])
     def showSummary():
+        """
+        Affichage du sommaire du site et de la liste des compétitions à réserver après vérification
+        de l'identifiant du club (adresse email)
+
+        """
         club = dataget.get_club_by_email(clubs, request.form['email'])
-        return render_template('welcome.html', club=club, competitions=competitions)
+        if club:
+            return render_template('welcome.html', club=club, competitions=competitions)
+        else:
+            flash("Wrong email, please try again")
+            return render_template('index.html')
 
     @app.route('/book/<competition>/<club>')
     def book(competition, club):
+        """
+        Affichage de la page de réservation d'une compétition après vérification des identifiants du club (nom)
+        et de la compétition (nom)
+        """
         foundClub = dataget.get_club_by_name(clubs, club)
         foundCompetition = dataget.get_competition(competitions, competition)
         if foundClub and foundCompetition:
@@ -31,6 +47,9 @@ def create_app(testing_mode):
 
     @app.route('/purchasePlaces', methods=['POST'])
     def purchasePlaces():
+        """
+        Affichage du sommaire du site après mise à jour des éléments de la réservation
+        """
         competition = dataget.get_competition(competitions, request.form['competition'])
         club = dataget.get_club_by_name(clubs, request.form['club'])
         placesRequired = int(request.form['places'])
@@ -42,6 +61,9 @@ def create_app(testing_mode):
 
     @app.route('/logout')
     def logout():
+        """
+        Déconnexion et redirection vers la page d'accueil du site
+        """
         return redirect(url_for('index'))
 
     return app
