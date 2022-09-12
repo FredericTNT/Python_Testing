@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, flash, url_for
 from dataservices import dataload, dataget
+from utilities import inputcontrol
 
 
 def create_app(testing_mode):
@@ -53,6 +54,9 @@ def create_app(testing_mode):
         RATIO_POINTS_PLACES = 1
         competition = dataget.get_competition(competitions, request.form['competition'])
         club = dataget.get_club_by_name(clubs, request.form['club'])
+        if not inputcontrol.is_positive_integer(request.form['places']):
+            flash('You need to book a positive integer of places')
+            return render_template('booking.html', club=club, competition=competition)
         placesRequired = int(request.form['places'])
         pointsNeeded = placesRequired * RATIO_POINTS_PLACES
         competition.minusPlaces(placesRequired)
