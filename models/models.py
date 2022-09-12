@@ -8,6 +8,9 @@ class Club:
     def __repr__(self):
         return self.name
 
+    def minusPoints(self, points):
+        self.points = str(int(self.points) - points)
+
 
 class Competition:
 

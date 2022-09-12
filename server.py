@@ -50,10 +50,13 @@ def create_app(testing_mode):
         """
         Affichage du sommaire du site après mise à jour des éléments de la réservation
         """
+        RATIO_POINTS_PLACES = 1
         competition = dataget.get_competition(competitions, request.form['competition'])
         club = dataget.get_club_by_name(clubs, request.form['club'])
         placesRequired = int(request.form['places'])
+        pointsNeeded = placesRequired * RATIO_POINTS_PLACES
         competition.minusPlaces(placesRequired)
+        club.minusPoints(pointsNeeded)
         flash('Great-booking complete!')
         return render_template('welcome.html', club=club, competitions=competitions)
 
