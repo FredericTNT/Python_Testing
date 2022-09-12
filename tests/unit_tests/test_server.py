@@ -106,7 +106,7 @@ def test_purchase_not_enough_points(client, mocker):
     data = response.data.decode()
     assert response.status_code == 200
     assert data.find("<title>Summary | GUDLFT Registration</title>") != -1
-    assert data.find("Great-booking complete!") == -1
+    assert data.find("Not enough points to book so many places") != -1
     assert competition.numberOfPlaces == '20'
     assert club.points == '5'
 

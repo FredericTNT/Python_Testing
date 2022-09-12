@@ -63,9 +63,12 @@ def create_app(testing_mode):
             return render_template('booking.html', club=club, competition=competition)
         placesRequired = int(request.form['places'])
         pointsNeeded = placesRequired * RATIO_POINTS_PLACES
-        competition.minusPlaces(placesRequired)
-        club.minusPoints(pointsNeeded)
-        flash('Great-booking complete!')
+        if pointsNeeded > int(club.points):
+            flash("Not enough points to book so many places")
+        else:
+            competition.minusPlaces(placesRequired)
+            club.minusPoints(pointsNeeded)
+            flash('Great-booking complete!')
         return render_template('welcome.html', club=club, competitions=competitions)
 
     # TODO: Add route for points display
