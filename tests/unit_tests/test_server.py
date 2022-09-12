@@ -154,7 +154,7 @@ def test_purchase_more_than_places_available(client, mocker):
     data = response.data.decode()
     assert response.status_code == 200
     assert data.find("<title>Summary | GUDLFT Registration</title>") != -1
-    assert data.find("Great-booking complete!") == -1
+    assert data.find("You cannot book more than the number of places available") != -1
     assert competition.numberOfPlaces == '3'
     assert club.points == '15'
 
