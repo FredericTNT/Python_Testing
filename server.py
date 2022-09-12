@@ -65,6 +65,8 @@ def create_app(testing_mode):
         pointsNeeded = placesRequired * RATIO_POINTS_PLACES
         if pointsNeeded > int(club.points):
             flash("Not enough points to book so many places")
+        elif placesRequired > 12:
+            flash("Booking more than 12 places per competition is not allowed")
         else:
             competition.minusPlaces(placesRequired)
             club.minusPoints(pointsNeeded)
