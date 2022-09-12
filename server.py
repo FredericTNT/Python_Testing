@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, redirect, flash, url_for
+from datetime import datetime
 from dataservices import dataload, dataget
 from utilities import inputcontrol
 
@@ -41,10 +42,13 @@ def create_app(testing_mode):
         foundClub = dataget.get_club_by_name(clubs, club)
         foundCompetition = dataget.get_competition(competitions, competition)
         if foundClub and foundCompetition:
-            return render_template('booking.html', club=foundClub, competition=foundCompetition)
+            if datetime.fromisoformat(foundCompetition.date) > datetime.today():
+                return render_template('booking.html', club=foundClub, competition=foundCompetition)
+            else:
+                flash("You cannot book a past competition")
         else:
             flash("Something went wrong-please try again")
-            return render_template('welcome.html', club=club, competitions=competitions)
+        return render_template('welcome.html', club=foundClub, competitions=competitions)
 
     @app.route('/purchasePlaces', methods=['POST'])
     def purchasePlaces():
