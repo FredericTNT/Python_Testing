@@ -75,7 +75,9 @@ def create_app(testing_mode):
             flash('Great-booking complete!')
         return render_template('welcome.html', club=club, competitions=competitions)
 
-    # TODO: Add route for points display
+    @app.route('/pointsDisplay')
+    def pointsDisplay():
+        return render_template('dashboard.html', clubs=clubs)
 
     @app.route('/logout')
     def logout():

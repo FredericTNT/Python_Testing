@@ -22,3 +22,7 @@ class ProjectPerfTest(HttpUser):
         competition = "Spring Festival"
         club = "Iron Temple"
         self.client.post('/purchasePlaces', data={'competition': competition, 'club': club, 'places': 5})
+
+    @task
+    def dashboard(self):
+        self.client.get("/pointsDisplay")

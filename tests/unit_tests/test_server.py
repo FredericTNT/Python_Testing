@@ -159,6 +159,13 @@ def test_purchase_more_than_places_available(client, mocker):
     assert club.points == '15'
 
 
+def test_dashboard(client):
+    response = client.get('/pointsDisplay')
+    data = response.data.decode()
+    assert response.status_code == 200
+    assert data.find("<title>Dashboard | GUDLFT</title>") != -1
+
+
 def test_logout_redirection_ok(client):
     response = client.get('/logout')
     assert response.status_code == 302
