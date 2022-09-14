@@ -56,7 +56,7 @@ def test_booking_ok(client, mocker):
     response = client.get('/book/' + competition.name + '/' + club.name)
     data = response.data.decode()
     assert response.status_code == 200
-    assert data.find("<title>Booking for " + competition.name + " || GUDLFT</title>") != -1
+    assert data.find("<title>Booking for " + competition.name + " | GUDLFT</title>") != -1
 
 
 def test_booking_ko(client, mocker):
@@ -137,7 +137,7 @@ def test_purchase_bad_input(client, mocker):
         'competition': 'competition_name', 'club': 'club_name', 'places': places})
     data = response.data.decode()
     assert response.status_code == 200
-    assert data.find("<title>Booking for " + competition.name + " || GUDLFT</title>") != -1
+    assert data.find("<title>Booking for " + competition.name + " | GUDLFT</title>") != -1
     assert data.find("You need to book a positive integer of places") != -1
     assert competition.numberOfPlaces == '20'
     assert club.points == '15'
