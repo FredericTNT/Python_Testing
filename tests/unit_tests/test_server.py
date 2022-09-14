@@ -92,7 +92,7 @@ def test_purchase_ok(client, mocker):
     assert data.find("<title>Summary | GUDLFT Registration</title>") != -1
     assert data.find("Great-booking complete!") != -1
     assert competition.numberOfPlaces == '17'
-    assert club.points == '12'
+    assert club.points == '6'
 
 
 def test_purchase_not_enough_points(client, mocker):
@@ -113,7 +113,7 @@ def test_purchase_not_enough_points(client, mocker):
 
 def test_purchase_more_than_12_places(client, mocker):
     competition = Competition("$Seconde compétition!*", "2022-11-11 10:00:00", "20")
-    club = Club("$Premier club!*", "$club1@python.com.!*", "15")
+    club = Club("$Premier club!*", "$club1@python.com.!*", "40")
     places = 13
     mocker.patch('dataservices.dataget.get_competition', return_value=competition)
     mocker.patch('dataservices.dataget.get_club_by_name', return_value=club)
@@ -124,7 +124,7 @@ def test_purchase_more_than_12_places(client, mocker):
     assert data.find("<title>Summary | GUDLFT Registration</title>") != -1
     assert data.find("Booking more than 12 places per competition is not allowed") != -1
     assert competition.numberOfPlaces == '20'
-    assert club.points == '15'
+    assert club.points == '40'
 
 
 def test_purchase_bad_input(client, mocker):

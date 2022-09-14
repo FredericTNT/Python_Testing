@@ -55,7 +55,7 @@ def create_app(testing_mode):
         """
         Affichage du sommaire du site après mise à jour des éléments de la réservation
         """
-        RATIO_POINTS_PLACES = 1
+        RATIO_POINTS_PLACES = 3
         competition = dataget.get_competition(competitions, request.form['competition'])
         club = dataget.get_club_by_name(clubs, request.form['club'])
         if not inputcontrol.is_positive_integer(request.form['places']):
