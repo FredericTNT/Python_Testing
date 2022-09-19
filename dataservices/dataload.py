@@ -1,12 +1,13 @@
-import json
+import os
 import sys
+import json
 from models.models import Club, Competition
 
 
 def loadClubs():
     file_name = 'clubs.json'
-    if len(sys.argv) != 1 and sys.argv[1] == 'Test':
-        file_name = 'tests/clubs.json'
+    if len(sys.argv) != 1 and os.path.exists(os.path.join(sys.argv[1], file_name)):
+        file_name = os.path.join(sys.argv[1], file_name)
     with open(file_name) as clubs:
         data = json.load(clubs)['clubs']
         list_of_clubs = []
@@ -17,8 +18,8 @@ def loadClubs():
 
 def loadCompetitions():
     file_name = 'competitions.json'
-    if len(sys.argv) != 1 and sys.argv[1] == 'Test':
-        file_name = 'tests/competitions.json'
+    if len(sys.argv) != 1 and os.path.exists(os.path.join(sys.argv[1], file_name)):
+        file_name = os.path.join(sys.argv[1], file_name)
     with open(file_name) as competitions:
         data = json.load(competitions)['competitions']
         list_of_competitions = []
